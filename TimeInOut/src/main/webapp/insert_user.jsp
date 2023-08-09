@@ -16,6 +16,7 @@
             pstmt.executeUpdate();
             conn.close();
             pstmt.close();
+            
 %>
 <script>
     alert("Insert 성공");
