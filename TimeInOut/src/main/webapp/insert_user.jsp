@@ -7,11 +7,11 @@
 <%
     Connection conn = DbConfig.getConnection();
     PreparedStatement pstmt = null;
-    String query = "INSERT INTO USER VALUES (?, ?)";
+    String query = "INSERT INTO USER(userName,password) VALUES (?, ?)";
     if(conn != null) {
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, request.getParameter("id"));
+            pstmt.setString(1, request.getParameter("userName"));
             pstmt.setString(2, request.getParameter("pw"));
             pstmt.executeUpdate();
             conn.close();

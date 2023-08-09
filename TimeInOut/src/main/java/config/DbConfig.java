@@ -6,9 +6,9 @@ public class DbConfig {
 	public static Connection getConnection() {
 		
 		try {
-            String dbURL = "jdbc:mysql://localhost:3306/JSP";
+            String dbURL = "jdbc:mysql://localhost:3306/timeinout";
             String dbID = "root";
-            String dbPW = "1234";
+            String dbPW = "**";
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             return DriverManager.getConnection(dbURL, dbID, dbPW);
