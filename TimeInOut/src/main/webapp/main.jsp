@@ -7,10 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	로그인후 id 넘겨받기
+	<form action="logoutAction.jsp" method="post">
+		로그인후 id 넘겨받기
 	<%
 		String userName = (String)session.getAttribute("userName");
 	%>
 	<p> ID: <%= userName %>
+	<input type="submit" name="Logout" >
+	</form>
 </body>
 </html>
