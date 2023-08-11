@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	로그인후 id 넘겨받기
+	<%
+		String userName = (String)session.getAttribute("userName");
+	%>
+	<p> ID: <%= userName %>
 </body>
 </html>
