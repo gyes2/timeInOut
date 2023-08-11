@@ -45,6 +45,8 @@
 				//세션 설정
 			session.setAttribute("userName", loginUser.getUserName());
 			session.setAttribute("userPassword",loginUser.getPassword());
+			//세션 유효시간-4시간
+			session.setMaxInactiveInterval(60*60*4);
 				
 	%>
 			<script>
