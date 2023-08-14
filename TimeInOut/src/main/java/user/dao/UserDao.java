@@ -102,7 +102,7 @@ public class UserDao {
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, req.getUserId());
             pstmt.setString(2, req.getPassword());
-            pstmt.setString(3, req.getuserName());
+            pstmt.setString(3, req.getUserName());
             pstmt.setString(4, req.getEmail());
             pstmt.executeUpdate();
             res = true;

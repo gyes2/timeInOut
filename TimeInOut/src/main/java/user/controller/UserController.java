@@ -37,7 +37,7 @@ public class UserController extends HttpServlet {
         }
         else if(path.equals("/user/mypage")) {
             HttpSession session = req.getSession();
-            String userId = (String) session.getAttribute("userName");
+            String userId = (String) session.getAttribute("userId");
 
             MyPageDto myPageDto = fetchMyPageInfoFromDB(userId);
             req.setAttribute("mypage", myPageDto);
