@@ -1,26 +1,22 @@
 package user.dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import config.DbConfig;
-import user.service.*;
+import user.dto.SignupDto;
 import user.entity.User;
 
 
 public class UserDao {
-	private String userName;
-	private String password;
 	
 	Connection conn = DbConfig.getConnection();
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
 	User user = null;
-	
-	public UserDao() {
-		this.userName = "";
-		this.password="";
-	}
 	
 	public User getUser(String userName) {
 		String query = "select * "+"from user";
@@ -63,6 +59,57 @@ public class UserDao {
 			return -1;
 		}
 	}
+	
+	public int existsUserId(String userId) {
+        int res = -1;
+
+        String query = "select exists("
+                + "select userName"
+                + "	from timeinout.`user`"
+                + "	where userName = (?)"
+                + "	limit 1) as success";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, userId);
+
+            rs = pstmt.executeQuery();
+
+            rs.next();
+            res = rs.getInt(1);
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    public boolean insertUser(SignupDto req) {
+        boolean res = false;
+
+        String query = "insert into timeinout.`user`"
+                + "(userId, password, userName, email)"
+                + "VALUES(?, ?, ?, ?);";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, req.getUserId());
+            pstmt.setString(2, req.getPassword());
+            pstmt.setString(3, req.getuserName());
+            pstmt.setString(4, req.getEmail());
+            pstmt.executeUpdate();
+            res = true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
 
 }
 
