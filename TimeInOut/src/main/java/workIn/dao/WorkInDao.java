@@ -15,8 +15,6 @@ import workIn.entity.WorkIn;
 
 public class WorkInDao {
 	//DB ���� ����
-	private final UserDao userDao = new UserDao();
-	
     private Connection conn = DbConfig.getConnection();
     private PreparedStatement pstmt;
     ResultSet rs = null;
