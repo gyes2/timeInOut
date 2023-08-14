@@ -115,7 +115,8 @@
                     type: "POST",
                     url: "/signup",
                     data: { userId: userId,
-                        password: password,
+                        password: password, 
+                        userName: userName,
                         email: email
                     },
                     success: function(response) {
