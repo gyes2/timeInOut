@@ -30,7 +30,7 @@
 	</form>
 	<%
 		WorkInDao workInDao = new WorkInDao();
-		userWork = workInDao.getUserWork(userName);
+		userWork = workInDao.getUserWork(userId);
 		String workIn = userWork.getWorkIn();
 	%>
 	<button class = "btn">In</button>
