@@ -23,9 +23,9 @@
 	<form name = "time" action="logoutAction.jsp" method="post">
 		로그인후 id 넘겨받기
 	<%
-		String userName = (String)session.getAttribute("userName");
+		String userId = (String)session.getAttribute("userId");
 	%>
-	<p> ID: <%= userName %>
+	<p> ID: <%= userId %>
 	<input type="submit" value="Logout" >
 	</form>
 	<%

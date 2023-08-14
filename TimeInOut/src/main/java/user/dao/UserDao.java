@@ -27,11 +27,8 @@ public class UserDao {
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					String name = rs.getString("userId");
-<<<<<<< HEAD
+
 					if(name.equals(userId)) {
-=======
-					if(name.equals(userName)) {
->>>>>>> branch 'user' of https://github.com/gyes2/timeInOut.git
 						newUser = new User();
 						newUser.setUserId(name);
 						newUser.setId(Long.parseLong(rs.getString("id")));
@@ -45,14 +42,8 @@ public class UserDao {
 		}
 		return newUser;
 	}
-<<<<<<< HEAD
 	public int login(String userId, String password) {
 		user = getUser(userId);
-=======
-	
-	public int login(String userName, String password) {
-		user = getUser(userName);
->>>>>>> branch 'user' of https://github.com/gyes2/timeInOut.git
 		if(user == null) {
 			return -2;
 		}

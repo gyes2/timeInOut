@@ -16,7 +16,7 @@ public class WorkInDao{
 	private String workIn;
 	private String workOut;
 	private String today;
-	private String userName;
+	private String userId;
 	private UserDao userDao;
 	private static User user;
 	private static WorkIn work;
@@ -26,10 +26,10 @@ public class WorkInDao{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	public WorkIn getUserWork(String userName) {
-		user = userDao.getUser(userName);
+	public WorkIn getUserWork(String userId) {
+		user = userDao.getUser(userId);
 		long id = user.getId();
-		String query = "SELECT * FROM WORKIN WHERE userId = "+id;
+		String query = "SELECT * FROM WORKIN WHERE userId = (?)";
 		
 		LocalDateTime dateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -40,6 +40,7 @@ public class WorkInDao{
 		if(conn != null) {
 			try {
 				pstmt = conn.prepareStatement(query);
+				pstmt.setLong(1, id);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					if(rs.getString("today") == date) {

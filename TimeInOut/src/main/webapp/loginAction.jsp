@@ -5,9 +5,11 @@
 <%@ page import="user.entity.User" %>
 <%@ page import="java.sql.*" %>
 <% request.setCharacterEncoding("utf-8"); %>
-<jsp:useBean id="loginUser" class="user.entity.User"/>
+<jsp:useBean id="loginUser" scope="session" class="user.entity.User"/>
 <jsp:setProperty name="loginUser" property="userId"/>
 <jsp:setProperty name="loginUser" property="password"/>
+<jsp:setProperty name="loginUser" property="userName"/>
+<jsp:setProperty name="loginUser" property="email"/>
 
 <!DOCTYPE html>
 <html>
@@ -42,12 +44,19 @@
 	<%
 		}
 		else if(result == 1){
-				//세션 설정
-			session.setAttribute("userId", loginUser.getUserName());
+			//세션 설정
+			session.setAttribute("userId", loginUser.getUserId());
 			session.setAttribute("userPassword",loginUser.getPassword());
 			//세션 유효시간-4시간
 			session.setMaxInactiveInterval(60*60*4);
-				
+			
+			//쿠키생성
+			Cookie c_userId = new Cookie("userId",request.getParameter("userId"));
+			Cookie c_password = new Cookie("password",request.getParameter("userpassword"));
+			Cookie c_userName = new Cookie("userName",loginUser.getUserName());
+			response.addCookie(c_userId);
+			response.addCookie(c_password);
+			response.addCookie(c_userName);
 	%>
 			<script>
 				alert("Success Login!");
