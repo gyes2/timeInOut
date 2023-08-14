@@ -17,11 +17,11 @@ public class UserDao {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	User user = null;
+	private static User user;
 	
 	public User getUser(String userId) {
 		String query = "select * "+"from user";
-		User newUser = null;
+		User newUser = new User();
 		if(conn != null){
 			try {
 				pstmt = conn.prepareStatement(query);

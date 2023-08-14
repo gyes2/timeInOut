@@ -29,6 +29,7 @@ public class WorkInDao {
 	private static WorkIn work;
 	
 	public WorkIn getUserWork(String userName) {
+		userDao = new UserDao();
 		user = userDao.getUser(userName);
 		long id = user.getId();
 		String query = "SELECT * FROM WORKIN WHERE userId = "+id;

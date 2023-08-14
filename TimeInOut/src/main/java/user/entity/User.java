@@ -3,7 +3,7 @@ package user.entity;
 public class User{
 	
 	private long id;
-  private String userId;
+    private String userId;
 	private String password;
 	private String userName;
 	private String email;
