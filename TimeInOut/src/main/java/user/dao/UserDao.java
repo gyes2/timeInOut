@@ -18,7 +18,7 @@ public class UserDao {
 	
 	User user = null;
 	
-	public User getUser(String userName) {
+	public User getUser(String userId) {
 		String query = "select * "+"from user";
 		User newUser = null;
 		if(conn != null){
@@ -26,8 +26,8 @@ public class UserDao {
 				pstmt = conn.prepareStatement(query);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					String name = rs.getString("userName");
-					if(name.equals(userName)) {
+					String name = rs.getString("userId");
+					if(name.equals(userId)) {
 						newUser = new User();
 						newUser.setId(Long.parseLong(rs.getString("id")));
 						newUser.setUserName(name);
@@ -43,16 +43,16 @@ public class UserDao {
 		}
 		return newUser;
 	}
-	public int login(String userName, String password) {
-		user = getUser(userName);
+	public int login(String userId, String password) {
+		user = getUser(userId);
 		if(user == null) {
 			return -2;
 		}
-		if(user.getUserName().equals(userName) 
+		if(user.getUserName().equals(userId) 
 				&& user.getPassword().equals(password)) {
 			return 1;
 		}
-		else if(user.getUserName().equals(userName) 
+		else if(user.getUserName().equals(userId) 
 				&& !user.getPassword().equals(password)) {
 			return 0;
 		}

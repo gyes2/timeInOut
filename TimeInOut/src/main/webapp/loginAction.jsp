@@ -6,7 +6,7 @@
 <%@ page import="java.sql.*" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <jsp:useBean id="loginUser" class="user.entity.User"/>
-<jsp:setProperty name="loginUser" property="userName"/>
+<jsp:setProperty name="loginUser" property="userId"/>
 <jsp:setProperty name="loginUser" property="password"/>
 
 <!DOCTYPE html>
@@ -18,8 +18,8 @@
 <body>
 	<%
 	//세션확인
-	if(session.getAttribute("userName") != null){
-		if(request.getAttribute("userName") == (String)session.getAttribute("userName")){
+	if(session.getAttribute("userId") != null){
+		if(request.getAttribute("userId") == (String)session.getAttribute("userId")){
 	%>
 	<script>
 		alert("이미 로그인이 완료된 상태입니다.");
@@ -29,7 +29,7 @@
 	}
 	else{
 		UserDao userDao = new UserDao();
-		int result = userDao.login(request.getParameter("userName"),request.getParameter("password"));
+		int result = userDao.login(request.getParameter("userId"),request.getParameter("password"));
 		//유저 있는지 확인
 		
 		//loginUser = userDao.getUser(request.getParameter("userName"));
@@ -43,7 +43,7 @@
 		}
 		else if(result == 1){
 				//세션 설정
-			session.setAttribute("userName", loginUser.getUserName());
+			session.setAttribute("userId", loginUser.getUserName());
 			session.setAttribute("userPassword",loginUser.getPassword());
 			//세션 유효시간-4시간
 			session.setMaxInactiveInterval(60*60*4);
@@ -51,7 +51,6 @@
 	%>
 			<script>
 				alert("Success Login!");
-					//location.href = 'main.jsp';
 			</script>
 	<%
 			response.sendRedirect("main.jsp");
