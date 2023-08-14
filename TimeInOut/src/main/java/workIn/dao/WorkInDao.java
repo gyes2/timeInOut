@@ -14,7 +14,7 @@ import user.entity.User;
 import workIn.entity.WorkIn;
 
 public class WorkInDao {
-	//DB ¿¬°á ¼³Á¤
+	//DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private Connection conn = DbConfig.getConnection();
     private PreparedStatement pstmt;
     ResultSet rs = null;
@@ -26,8 +26,6 @@ public class WorkInDao {
 	private UserDao userDao;
 	private static User user;
 	private static WorkIn work;
-	
-	
 	
 	public WorkIn getUserWork(String userName) {
 		userDao = new UserDao();
