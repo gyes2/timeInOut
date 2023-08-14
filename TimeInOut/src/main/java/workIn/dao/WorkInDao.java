@@ -23,6 +23,7 @@ public class WorkInDao {
 	private String workOut;
 	private String today;
 	private String userName;
+	private UserDao userDao;
 	private static User user;
 	private static WorkIn work;
 	
