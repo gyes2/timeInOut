@@ -2,11 +2,18 @@ package user.entity;
 
 public class User{
 	
-	private String userId;
+	private long id;
+  private String userId;
 	private String password;
 	private String userName;
 	private String email;
 	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getUserId() {
 		return userId;
