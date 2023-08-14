@@ -21,9 +21,8 @@ public class UserController extends HttpServlet {
 	
 	private final UserDao userDao = new UserDao();
 	private final CompanyDao companyDao = new CompanyDao();
-	
 
-    @Override
+	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         req.setCharacterEncoding("utf-8");
@@ -37,15 +36,16 @@ public class UserController extends HttpServlet {
             dispatcher = getServletContext().getRequestDispatcher("/signup.jsp");
         }
         else if(path.equals("/user/mypage")) {
-            // Session에서 불러오기
             HttpSession session = req.getSession();
             String userId = (String) session.getAttribute("userName");
 
             MyPageDto myPageDto = fetchMyPageInfoFromDB(userId);
-
             req.setAttribute("mypage", myPageDto);
-            System.out.println(req.getAttribute("mypage"));
+            
             dispatcher = getServletContext().getRequestDispatcher("/mypage.jsp");
+        }
+        else if(path.equals("/user/login")) {
+        	dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
         }
         else {
             // 404 페이지

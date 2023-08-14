@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import config.Base64Config;
 import config.DbConfig;
 import user.dto.SignupDto;
 import user.entity.User;
@@ -45,16 +46,17 @@ public class UserDao {
 
 	public int login(String userId, String password) {
 		user = getUser(userId);
+		String decodePw = (String)(new Base64Config().decode(user.getPassword()));
 
 		if(user == null) {
 			return -2;
 		}
-		if(user.getUserName().equals(userId) 
-				&& user.getPassword().equals(password)) {
+		if(user.getUserId().equals(userId) 
+				&& decodePw.equals(password)) {
 			return 1;
 		}
-		else if(user.getUserName().equals(userId) 
-				&& !user.getPassword().equals(password)) {
+		else if(user.getUserId().equals(userId) 
+				&& !decodePw.equals(password)) {
 			return 0;
 		}
 		else {
@@ -66,9 +68,9 @@ public class UserDao {
         int res = -1;
 
         String query = "select exists("
-                + "select userName"
+                + "select userId"
                 + "	from timeinout.`user`"
-                + "	where userName = (?)"
+                + "	where userId = (?)"
                 + "	limit 1) as success";
 
         try {
