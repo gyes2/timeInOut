@@ -26,22 +26,21 @@ public class UserDao {
 				pstmt = conn.prepareStatement(query);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					String name = rs.getString("userName");
+					String name = rs.getString("userId");
 					if(name.equals(userName)) {
 						newUser = new User();
-						newUser.setUserName(name);
+						newUser.setUserId(name);
 						newUser.setPassword(rs.getString("password"));
 						break;
 					}
 				}
-				conn.close();
-				pstmt.close();
 			}catch(SQLException e){
 				e.printStackTrace();
 			}
 		}
 		return newUser;
 	}
+	
 	public int login(String userName, String password) {
 		user = getUser(userName);
 		if(user == null) {
