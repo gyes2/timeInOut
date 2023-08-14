@@ -8,7 +8,7 @@ public class DbConfig {
 		try {
             String dbURL = "jdbc:mysql://localhost:3306/timeinout?useUnicode=true&serverTimezone=Asia/Seoul";
             String dbID = "root";
-            String dbPW = "Dlwldms123@";
+            String dbPW = "**";
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             return DriverManager.getConnection(dbURL, dbID, dbPW);
