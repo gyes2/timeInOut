@@ -42,8 +42,10 @@ public class UserDao {
 		}
 		return newUser;
 	}
+
 	public int login(String userId, String password) {
 		user = getUser(userId);
+
 		if(user == null) {
 			return -2;
 		}
@@ -109,6 +111,39 @@ public class UserDao {
         }
 
         return res;
+    }
+    
+    public void deleteUser(String userId){
+        String query = "DELETE FROM timeinout.`user`"
+                + "WHERE userId=?";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, userId);
+            pstmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void updatePassword(String password, String userId) {
+        String query = "UPDATE timeinout.`user`" +
+                "SET password=?" +
+                "WHERE userId=?";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, password);
+            pstmt.setString(2, userId);
+            pstmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
