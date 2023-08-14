@@ -33,6 +33,7 @@ public class UserDao {
 					String name = rs.getString("userName");
 					if(name.equals(userName)) {
 						newUser = new User();
+						newUser.setId(Long.parseLong(rs.getString("id")));
 						newUser.setUserName(name);
 						newUser.setPassword(rs.getString("password"));
 						break;
