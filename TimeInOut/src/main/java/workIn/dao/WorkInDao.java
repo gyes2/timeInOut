@@ -15,41 +15,45 @@ import workIn.entity.WorkIn;
 
 public class WorkInDao {
 	//DB 연결 설정
-    private Connection conn = DbConfig.getConnection();
-    private PreparedStatement pstmt;
-    ResultSet rs = null;
+    static Connection conn = DbConfig.getConnection();
+    static PreparedStatement pstmt;
+    static ResultSet rs = null;
     
     private String workIn;
 	private String workOut;
 	private String today;
 	private String userName;
-	private UserDao userDao;
-	private static User user;
-	private static WorkIn work;
+	static UserDao userDao = new UserDao();
+	static User user;
+	static final WorkIn work = new WorkIn();
 	
 	
 	
 	public WorkIn getUserWork(String userName) {
-		userDao = new UserDao();
 		user = userDao.getUser(userName);
+		System.out.println("getUserWork user: "+ user.getUserId()+"id: " +user.getId());
 		long id = user.getId();
-		String query = "SELECT * FROM WORKIN WHERE userId = "+id;
+		String query = "SELECT * FROM WORKIN WHERE userId = ?";
 		
 		LocalDateTime dateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String date = dateTime.format(formatter);
 		
-		work = new WorkIn();
 		
 		if(conn != null) {
 			try {
 				pstmt = conn.prepareStatement(query);
+				pstmt.setLong(1, id);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					if(rs.getString("today") == date) {
+					if(rs.getString("today").equals(date)) {
+						System.out.println("getUserWorkIn rs.getString(\"workIn\"): "+rs.getString("workIn")+rs.getString("workOut"));
 						work.setWorkIn(rs.getString("workIn"));
+						work.setWorkOut(rs.getString("workOut"));
 						work.setToday(date);
+						work.setStatus(rs.getString("status"));
 						work.setUser(user);
+						
 						break;
 					}
 				}
@@ -57,6 +61,7 @@ public class WorkInDao {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("getUserWorkIn userId: "+user.getId()+"출근시간: "+work.getWorkIn());
 		return work;
 	}
 	
@@ -64,28 +69,56 @@ public class WorkInDao {
 		return null;
 	};
 	
-	public void insertUserWork(String userName) {
-		String query = "INSERT INTO WORKIN(status,today,userId) VALUES (?,?,?)";
+	public int insertUserWork(String userName) {
+		String query = "INSERT INTO WORKIN(today,userId,status) VALUES (?,?,?)";
 		
 		LocalDateTime dateToday = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String today = dateToday.format(formatter);
 		
 		user = userDao.getUser(userName);
-		Long id = user.getId();
+
+		long id = user.getId();
 		if(conn != null) {
 			try {
 				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, "y");
-				pstmt.setString(2, today);
-				pstmt.setLong(3, id);
+				pstmt.setString(1, today);
+				pstmt.setLong(2, id);
+				pstmt.setString(3, "N");
 				pstmt.executeUpdate();
-				conn.close();
-				pstmt.close();
+				return 1;
 			}catch(SQLException e){
 				e.printStackTrace();
 			}
 		}
+		return 0;
+	}
+	
+	public int modifyUserWork(String userId) {
+		String query = "UPDATE timeinout.workin SET status = ? WHERE today = ? AND userId = ?";
+		
+		user = userDao.getUser(userId);
+		
+		long id = user.getId();
+		
+		LocalDateTime dateToday = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		today = dateToday.format(formatter);
+		
+		if(conn != null) {
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1,"Y");
+				pstmt.setString(2, today);  
+				pstmt.setLong(3, id);
+				pstmt.executeUpdate();
+				return 1;
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		
+		return 0;
 	}
 
     public void deleteWorkIn(String userId) {
