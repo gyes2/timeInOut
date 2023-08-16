@@ -8,18 +8,12 @@
 </head>
 <body>
 
-    <form action="./insert_user.jsp" method="post">
-        <table>
-            <tr>
-                <td>ID : </td>
-                <td><input type="text" name="userName"></td>
-            </tr>
-            <tr>
-                <td>Password : </td>
-                <td><input type="password" name="pw"></td>
-            </tr>
-        </table>
-        <input type="submit" value="Insert">
-    </form>
+    <a href = "/user/signup">SIGN UP</a>
+    <br>
+    <a href = "/user/login">LOG IN</a>
+    <br>
+    <a href = "/user/mypage">MY PAGE</a>
+    <br>
+    
 </body>
 </html>

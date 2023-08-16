@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import company.dao.CompanyDao;
 import company.entity.Company;
+import config.Base64Config;
 import user.dao.UserDao;
 import user.dto.MyPageDto;
 import user.entity.User;
@@ -58,12 +59,14 @@ public class UserController extends HttpServlet {
     public MyPageDto fetchMyPageInfoFromDB(String userId) {
         MyPageDto myPageDto = new MyPageDto();
 
-        // Setter로 데이터 추가
-        // userDao, companyDao
         User user = userDao.getUser(userId);
         Company company = companyDao.getCompany(userId);
+
+        String password = user.getPassword();
+        password = (String)(new Base64Config().decode(password));
         
         myPageDto.setUserId(user.getUserId());
+        myPageDto.setUserPassword(password);
         myPageDto.setCompanyName(company.getCompanyName());
         myPageDto.setCompanyIn(company.getCompanyIn());
         myPageDto.setCompanyOut(company.getCompanyOut());
