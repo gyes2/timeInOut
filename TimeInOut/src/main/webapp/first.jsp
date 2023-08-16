@@ -7,13 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-    <a href = "/user/signup">SIGN UP</a>
-    <br>
-    <a href = "/user/login">LOG IN</a>
-    <br>
-    <a href = "/user/mypage">MY PAGE</a>
-    <br>
-    
+로그인 전 화면
 </body>
 </html>

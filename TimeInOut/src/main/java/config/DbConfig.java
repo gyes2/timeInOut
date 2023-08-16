@@ -6,7 +6,7 @@ public class DbConfig {
 	public static Connection getConnection() {
 		
 		try {
-            String dbURL = "jdbc:mysql://localhost:3306/timeinout";
+            String dbURL = "jdbc:mysql://localhost:3306/timeinout?useUnicode=true&serverTimezone=Asia/Seoul";
             String dbID = "root";
             String dbPW = "**";
             Class.forName("com.mysql.cj.jdbc.Driver");
