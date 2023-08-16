@@ -1,7 +1,8 @@
 package admin.controller;
 
-import java.io.IOException;
-import java.util.List;
+import team.dao.TeamDao;
+import user.dao.UserDao;
+import user.dto.AdminUserDto;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,10 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import team.dao.TeamDao;
-import user.dao.UserDao;
-import user.dto.AdminUserDto;
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/admin/*"})
 public class AdminController extends HttpServlet {
@@ -43,6 +42,7 @@ public class AdminController extends HttpServlet {
         	}
         	
         	List<AdminUserDto> userList = userDao.getAllUsersByCompanyName("A", userName);
+            List<String> teamList = teamDao.getAllTeamByCompanyId("A");
 
             int pageSize = sizeOfPage;
             int currentPage = 1;
@@ -57,6 +57,7 @@ public class AdminController extends HttpServlet {
 
             List<AdminUserDto> currentPageUsers = userList.subList(startIdx, endIdx);
 
+            req.setAttribute("teamList", teamList);
             req.setAttribute("currentPageUsers", currentPageUsers);
             req.setAttribute("totalPages", (int) Math.ceil((double) userList.size() / pageSize));
         	
