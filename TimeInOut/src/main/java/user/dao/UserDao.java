@@ -202,6 +202,56 @@ public class UserDao {
             e.printStackTrace();
         }
     }
+    
+    public List<AdminUserDto> getAllUsersByTeamIsNull(String userName) {
 
+        List<AdminUserDto> res = new ArrayList<>();
+
+        String query = "SELECT u.userId, u.userName, u.email " +
+                "FROM timeinout.`user` u " +
+                "LEFT JOIN team t ON t.id = u.teamId " +
+                "WHERE u.teamId IS NULL " +
+                "AND u.userName like ?";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, "%" + userName + "%");
+            
+            rs = pstmt.executeQuery();
+            while(rs.next()) {
+
+                AdminUserDto adminUserDto = new AdminUserDto();
+
+                adminUserDto.setUserId(rs.getString("userId"));
+                adminUserDto.setUserName(rs.getString("userName"));
+                adminUserDto.setEmail(rs.getString("email"));
+
+                res.add(adminUserDto);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    public void updateTeamId(String teamName, String userId) {
+        String query = "UPDATE timeinout.`user` "
+        		+ "SET teamId=(SELECT id from team WHERE teamName=?) "
+        		+ "WHERE userId=?";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, teamName);
+            pstmt.setString(2, userId);
+            pstmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 
