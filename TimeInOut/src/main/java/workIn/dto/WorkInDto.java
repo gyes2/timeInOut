@@ -1,7 +1,5 @@
 package workIn.dto;
 
-import workIn.entity.WorkIn;
-
 public class WorkInDto{
 	private String userId;
 	private String workIn;

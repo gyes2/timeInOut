@@ -1,7 +1,7 @@
 package workIn.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +22,9 @@ import workIn.dto.WorkInDto;
 import workIn.entity.WorkIn;
 
 public class WorkInDao {
-	//DB ���� ����
+	
     static Connection conn = DbConfig.getConnection();
-    static PreparedStatement pstmt;
+    static PreparedStatement pstmt = null;
     static ResultSet rs = null;
     
     private String workIn;
@@ -44,8 +45,7 @@ public class WorkInDao {
 		LocalDateTime dateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String date = dateTime.format(formatter);
-		
-		
+
 		if(conn != null) {
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -108,21 +108,20 @@ public class WorkInDao {
 	};
 	
 	public int insertUserWork(String userName) {
-		String query = "INSERT INTO WORKIN(today,userId,status) VALUES (?,?,?)";
+		String query = "INSERT INTO WORKIN(status,today,userId) VALUES (?,?,?)";
 		
 		LocalDateTime dateToday = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String today = dateToday.format(formatter);
 		
 		user = userDao.getUser(userName);
-
 		long id = user.getId();
 		if(conn != null) {
 			try {
 				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, today);
-				pstmt.setLong(2, id);
-				pstmt.setString(3, "N");
+				pstmt.setString(1, "N");
+				pstmt.setString(2, today);
+				pstmt.setLong(3, id);
 				pstmt.executeUpdate();
 				return 1;
 			}catch(SQLException e){

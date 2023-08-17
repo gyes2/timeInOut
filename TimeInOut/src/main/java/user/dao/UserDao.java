@@ -20,23 +20,19 @@ public class UserDao {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	User user = new User();
 	
 	public User getUser(String userId) {
 		String query = "select * "+"from user";
 		User newUser = null;
-		long id=0;
 		if(conn != null){
 			try {
 				pstmt = conn.prepareStatement(query);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					newUser = new User();
 					String name = rs.getString("userId");
-
 					if(name.equals(userId)) {
+						newUser = new User();
 						newUser.setUserId(name);
-						System.out.println("user id: "+rs.getLong("id"));
 						newUser.setId(rs.getLong("id"));
 						newUser.setPassword(rs.getString("password"));
 						break;
@@ -72,25 +68,25 @@ public class UserDao {
 	}
 
 	public int login(String userId, String password) {
+		User user = null;
 		user = getUser(userId);
-		String decodePw = (String)(new Base64Config().decode(user.getPassword()));
 
-		if(user == null) {
-			System.out.println("login user null");
-			return -2;
+		if(user != null) {
+			String decodePw = (String)(new Base64Config().decode(user.getPassword()));
+			
+			if(user.getUserId().equals(userId) 
+					&& decodePw.equals(password)) {
+					return 1;
+				}
+				else if(user.getUserId().equals(userId) 
+						&& !decodePw.equals(password)) {
+					return 0;
+			}
+			else {
+				return -1;
+			}
 		}
-
-		if(user.getUserId().equals(userId) 
-				&& decodePw.equals(password)) {
-			return 1;
-		}
-		else if(user.getUserId().equals(userId) 
-				&& !decodePw.equals(password)) {
-			return 0;
-		}
-		else {
-			return -1;
-		}
+		return -2;
 	}
 	
 	public int existsUserId(String userId) {
@@ -134,7 +130,6 @@ public class UserDao {
             pstmt.setString(3, req.getUserName());
             pstmt.setString(4, req.getEmail());
             pstmt.executeUpdate();
-            conn.commit();
             res = true;
         } catch(SQLException e) {
             e.printStackTrace();
