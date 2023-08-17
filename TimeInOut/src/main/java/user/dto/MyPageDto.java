@@ -2,6 +2,7 @@ package user.dto;
 
 public class MyPageDto {
     private String userId;
+    private String userPassword;
     private String companyName;
     private String companyIn;
     private String companyOut;
@@ -12,6 +13,14 @@ public class MyPageDto {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public String getCompanyName() {
