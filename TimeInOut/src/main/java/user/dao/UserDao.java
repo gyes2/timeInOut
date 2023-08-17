@@ -22,6 +22,7 @@ public class UserDao {
 	public User getUser(String userId) {
 		String query = "select * "+"from user";
 		User newUser = new User();
+		long id=0;
 		if(conn != null){
 			try {
 				pstmt = conn.prepareStatement(query);
@@ -30,9 +31,9 @@ public class UserDao {
 					String name = rs.getString("userId");
 
 					if(name.equals(userId)) {
-						newUser = new User();
 						newUser.setUserId(name);
-						newUser.setId(Long.parseLong(rs.getString("id")));
+						System.out.println("user id: "+rs.getLong("id"));
+						newUser.setId(rs.getLong("id"));
 						newUser.setPassword(rs.getString("password"));
 						break;
 					}
@@ -105,6 +106,7 @@ public class UserDao {
             pstmt.setString(3, req.getUserName());
             pstmt.setString(4, req.getEmail());
             pstmt.executeUpdate();
+            conn.commit();
             res = true;
         } catch(SQLException e) {
             e.printStackTrace();

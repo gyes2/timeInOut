@@ -38,8 +38,8 @@ public class WorkIn{
 	public String getStatus() {
 		return status;
 	}
-	public void updateStatus() {
-		this.status = "N";
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

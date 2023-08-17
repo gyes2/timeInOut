@@ -47,6 +47,7 @@
 			//세션 설정
 			session.setAttribute("userId", loginUser.getUserId());
 			session.setAttribute("userPassword",loginUser.getPassword());
+			session.setAttribute("loginUser",loginUser);
 			//세션 유효시간-4시간
 			session.setMaxInactiveInterval(60*60*4);
 			
@@ -54,6 +55,8 @@
 			Cookie c_userId = new Cookie("userId",request.getParameter("userId"));
 			Cookie c_password = new Cookie("password",request.getParameter("userpassword"));
 			Cookie c_userName = new Cookie("userName",loginUser.getUserName());
+			Cookie sessionId = new Cookie("sessionId",session.getId());
+			
 			response.addCookie(c_userId);
 			response.addCookie(c_password);
 			response.addCookie(c_userName);
