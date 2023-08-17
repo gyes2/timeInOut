@@ -20,22 +20,19 @@ public class UserDao {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	private static User user;
 	
 	public User getUser(String userId) {
 		String query = "select * "+"from user";
-		User newUser = new User();
-		long id=0;
+		User newUser = null;
 		if(conn != null){
 			try {
 				pstmt = conn.prepareStatement(query);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					String name = rs.getString("userId");
-
 					if(name.equals(userId)) {
+						newUser = new User();
 						newUser.setUserId(name);
-						System.out.println("user id: "+rs.getLong("id"));
 						newUser.setId(rs.getLong("id"));
 						newUser.setPassword(rs.getString("password"));
 						break;
@@ -47,25 +44,49 @@ public class UserDao {
 		}
 		return newUser;
 	}
+	
+	public String getUserIdFromId(long id) {
+		String query = "select * "+"from user"+" where id = ?";
+		String name="";
+		
+		if(conn != null){
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setLong(1, id);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					if(id == rs.getLong("id")) {
+						name = rs.getString("userId");
+						break;
+					}
+				}
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return name;
+	}
 
 	public int login(String userId, String password) {
+		User user = null;
 		user = getUser(userId);
-		String decodePw = (String)(new Base64Config().decode(user.getPassword()));
 
-		if(user == null) {
-			return -2;
+		if(user != null) {
+			String decodePw = (String)(new Base64Config().decode(user.getPassword()));
+			
+			if(user.getUserId().equals(userId) 
+					&& decodePw.equals(password)) {
+					return 1;
+				}
+				else if(user.getUserId().equals(userId) 
+						&& !decodePw.equals(password)) {
+					return 0;
+			}
+			else {
+				return -1;
+			}
 		}
-		if(user.getUserId().equals(userId) 
-				&& decodePw.equals(password)) {
-			return 1;
-		}
-		else if(user.getUserId().equals(userId) 
-				&& !decodePw.equals(password)) {
-			return 0;
-		}
-		else {
-			return -1;
-		}
+		return -2;
 	}
 	
 	public int existsUserId(String userId) {
@@ -109,7 +130,6 @@ public class UserDao {
             pstmt.setString(3, req.getUserName());
             pstmt.setString(4, req.getEmail());
             pstmt.executeUpdate();
-            conn.commit();
             res = true;
         } catch(SQLException e) {
             e.printStackTrace();
