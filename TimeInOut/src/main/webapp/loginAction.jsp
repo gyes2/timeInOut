@@ -34,7 +34,7 @@
 		int result = userDao.login(request.getParameter("userId"),request.getParameter("password"));
 		//유저 있는지 확인
 		
-		//loginUser = userDao.getUser(request.getParameter("userName"));
+		System.out.println(result);
 		if(result == -2){
 	%>
 			<script>

@@ -16,17 +16,18 @@ public class UserDao {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	private static User user;
+	User user = new User();
 	
 	public User getUser(String userId) {
 		String query = "select * "+"from user";
-		User newUser = new User();
+		User newUser = null;
 		long id=0;
 		if(conn != null){
 			try {
 				pstmt = conn.prepareStatement(query);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
+					newUser = new User();
 					String name = rs.getString("userId");
 
 					if(name.equals(userId)) {
@@ -43,23 +44,51 @@ public class UserDao {
 		}
 		return newUser;
 	}
+	
+	public String getUserIdFromId(long id) {
+		String query = "select * "+"from user"+" where id = ?";
+		String name="";
+		
+		if(conn != null){
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setLong(1, id);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					if(id == rs.getLong("id")) {
+						name = rs.getString("userId");
+						break;
+					}
+				}
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return name;
+	}
 
 	public int login(String userId, String password) {
-		user = getUser(userId);
 
-		if(user == null) {
+		User l_user = getUser(userId);
+		
+
+		if(l_user == null) {
+			System.out.println("login user null");
 			return -2;
 		}
-		if(user.getUserId().equals(userId) 
-				&& user.getPassword().equals(password)) {
-			return 1;
-		}
-		else if(user.getUserId().equals(userId) 
-				&& !user.getPassword().equals(password)) {
-			return 0;
-		}
 		else {
-			return -1;
+			System.out.println("login user null¾Æ´Ô: "+user.getUserId());
+			if(l_user.getUserId().equals(userId) 
+					&& user.getPassword().equals(password)) {
+				return 1;
+			}
+			else if(l_user.getUserId().equals(userId) 
+					&& !user.getPassword().equals(password)) {
+				return 0;
+			}
+			else {
+				return -1;
+			}
 		}
 	}
 	
