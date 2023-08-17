@@ -14,7 +14,7 @@ import user.entity.User;
 import workIn.entity.WorkIn;
 
 public class WorkInDao {
-	//DB ¿¬°á ¼³Á¤
+	//DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     static Connection conn = DbConfig.getConnection();
     static PreparedStatement pstmt;
     static ResultSet rs = null;
@@ -26,8 +26,6 @@ public class WorkInDao {
 	static UserDao userDao = new UserDao();
 	static User user;
 	static final WorkIn work = new WorkIn();
-	
-	
 	
 	public WorkIn getUserWork(String userName) {
 		user = userDao.getUser(userName);
@@ -61,7 +59,7 @@ public class WorkInDao {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("getUserWorkIn userId: "+user.getId()+"Ãâ±Ù½Ã°£: "+work.getWorkIn());
+		System.out.println("getUserWorkIn userId: "+user.getId()+"ï¿½ï¿½Ù½Ã°ï¿½: "+work.getWorkIn());
 		return work;
 	}
 	

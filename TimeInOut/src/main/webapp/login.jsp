@@ -24,7 +24,7 @@
 </script>
 </head>
 <body>
-    <form name="login" action="loginAction.jsp" 
+    <form name="login" action="/login" 
     method="post" onsubmit="logincheck()" >
         <table>
             <tr>

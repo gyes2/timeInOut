@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import config.Base64Config;
 import config.DbConfig;
 import user.dto.SignupDto;
 import user.entity.User;
@@ -46,16 +47,17 @@ public class UserDao {
 
 	public int login(String userId, String password) {
 		user = getUser(userId);
+		String decodePw = (String)(new Base64Config().decode(user.getPassword()));
 
 		if(user == null) {
 			return -2;
 		}
 		if(user.getUserId().equals(userId) 
-				&& user.getPassword().equals(password)) {
+				&& decodePw.equals(password)) {
 			return 1;
 		}
 		else if(user.getUserId().equals(userId) 
-				&& !user.getPassword().equals(password)) {
+				&& !decodePw.equals(password)) {
 			return 0;
 		}
 		else {
@@ -67,9 +69,9 @@ public class UserDao {
         int res = -1;
 
         String query = "select exists("
-                + "select userName"
+                + "select userId"
                 + "	from timeinout.`user`"
-                + "	where userName = (?)"
+                + "	where userId = (?)"
                 + "	limit 1) as success";
 
         try {
@@ -101,7 +103,7 @@ public class UserDao {
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, req.getUserId());
             pstmt.setString(2, req.getPassword());
-            pstmt.setString(3, req.getuserName());
+            pstmt.setString(3, req.getUserName());
             pstmt.setString(4, req.getEmail());
             pstmt.executeUpdate();
             conn.commit();

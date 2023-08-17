@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import company.dao.CompanyDao;
 import company.entity.Company;
+import config.Base64Config;
 import user.dao.UserDao;
 import user.dto.MyPageDto;
 import user.entity.User;
@@ -21,9 +22,8 @@ public class UserController extends HttpServlet {
 	
 	private final UserDao userDao = new UserDao();
 	private final CompanyDao companyDao = new CompanyDao();
-	
 
-    @Override
+	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         req.setCharacterEncoding("utf-8");
@@ -37,15 +37,16 @@ public class UserController extends HttpServlet {
             dispatcher = getServletContext().getRequestDispatcher("/signup.jsp");
         }
         else if(path.equals("/user/mypage")) {
-            // Session에서 불러오기
             HttpSession session = req.getSession();
-            String userId = (String) session.getAttribute("userName");
+            String userId = (String) session.getAttribute("userId");
 
             MyPageDto myPageDto = fetchMyPageInfoFromDB(userId);
-
             req.setAttribute("mypage", myPageDto);
-            System.out.println(req.getAttribute("mypage"));
+            
             dispatcher = getServletContext().getRequestDispatcher("/mypage.jsp");
+        }
+        else if(path.equals("/user/login")) {
+        	dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
         }
         else {
             // 404 페이지
@@ -58,12 +59,14 @@ public class UserController extends HttpServlet {
     public MyPageDto fetchMyPageInfoFromDB(String userId) {
         MyPageDto myPageDto = new MyPageDto();
 
-        // Setter로 데이터 추가
-        // userDao, companyDao
         User user = userDao.getUser(userId);
         Company company = companyDao.getCompany(userId);
+
+        String password = user.getPassword();
+        password = (String)(new Base64Config().decode(password));
         
         myPageDto.setUserId(user.getUserId());
+        myPageDto.setUserPassword(password);
         myPageDto.setCompanyName(company.getCompanyName());
         myPageDto.setCompanyIn(company.getCompanyIn());
         myPageDto.setCompanyOut(company.getCompanyOut());

@@ -21,7 +21,7 @@ public class SignupDto {
         return password;
     }
     
-    public String getuserName() {
+    public String getUserName() {
         return userName;
     }
 
