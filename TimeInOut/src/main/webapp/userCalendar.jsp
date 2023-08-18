@@ -7,40 +7,127 @@
 <html>
 <head>
     <meta charset='utf-8' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    
+    <!-- 캘린더 라이브러리 가져다 쓰는 부분 -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <title>Calendar</title>
+    <style>
+    	*{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+#header {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    width: 1500px;
+    height: 100px;
+    margin: 0 auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+#header .logo a{
+    font-family: 'Dancing Script', cursive;   
+    text-decoration: none;
+    font-size: 1.5em;
+    margin-left: 50px;
+}
+
+
+nav a{
+    position: relative;
+    text-decoration: none;
+    font-family: sans-serif;
+    color: rgb(144, 142, 142);
+    letter-spacing: 0.5px;
+    margin-left: 50px;
+}
+
+nav a::after{
+    content: "";
+    position: absolute;
+    background-color: #075687;
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: -10px;
+    transition: 0.3s;
+}
+nav a:hover{
+    color: rgb(0, 0, 0);
+}
+nav a:hover::after{
+width: 100%;
+}
+
+#header .logo a:visited{
+    color: black;
+}
+    	
+    </style>
 </head>
 <body>
-	<%
-		String userId = (String)session.getAttribute("userId");
-	%>
-	
-    <div id='calendar'></div>
-    <div id='dateClickModal' class='modal fade' role='dialog'>
-        <div class='modal-dialog' id="modalWrap">
-            <div class='modal-content'>
-                <div class='modal-header'>
-                    <h4 class='modal-title'>Date Click Details</h4>
-                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                </div>
-                <div class='modal-body'>
-                    <p id='dateClickDetails'></p>
-                </div>
-                <div class='modal-footer'>
-                    <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+<div id="wrap">
+	<!-- 해더 -->
+    <header id="header">
+    	<h1 class="logo">
+            <a href="/index.html">TIME IN OUT.</a>
+        </h1>
+        <nav>
+            <ul>
+            	<a href="main.html">출퇴근 입력</a>
+                <a href="calendar.html">출퇴근 조회</a>
+                <a href="mypage.html">Mypage</a>
+                <a href="index.html">Logout</a>
+            </ul>
+        </nav>
+    </header>
+    <!-- 메인 -->
+    <main id="main">
+
+		<%
+			String userId = (String)session.getAttribute("userId");
+		%>
+		
+	    <div id='calendar'></div>
+	    <div id='dateClickModal' class='modal fade' role='dialog'>
+	        <div class='modal-dialog' id="modalWrap">
+	            <div class='modal-content'>
+	                <div class='modal-header'>
+	                    <h4 class='modal-title' id=title></h4>
+	                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+	                </div>
+	                <div class='modal-body'>
+	                    <p id='dateClickDetails'></p>
+	                </div>
+	                <div class='modal-footer'>
+	                    <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </main>
+    <!-- 푸터 -->
+    <footer id="footer"></footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+            	height: 'auto',
                 // FullCalendar 옵션 설정
 	            headerToolbar : { // 헤더에 표시할 툴 바
 					start : 'prev next today',
@@ -50,66 +137,51 @@
 				titleFormat : function(date) {
 					return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
 				},
-		//initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
-				//selectable : true, // 달력 일자 드래그 설정가능
-				//droppable : true,
-				//editable : true,
 				nowIndicator: true, // 현재 시간 마크
 				locale: 'ko',
 				events : [ 
 		    	    <%HashMap<String,WorkInDto> calendar = (HashMap<String,WorkInDto>) request.getAttribute("workList");%>
 		            <%if (calendar != null) {%>
 			            <%for (Map.Entry<String,WorkInDto> entry : calendar.entrySet()) {
+			            	System.out.println(entry.getValue().getWorkIn()+entry.getValue().getWorkOut()+entry.getValue().getStatus());
 			            	String status = "";
+			            	String c_color="";
 			            	if(entry.getValue().getStatus().equals("Y")){
 			            		status="출석";
+			            		c_color = "#006633";
 			            	}
 			            	else if(entry.getValue().getStatus().equals("D")){
 			            		status = "지각";
+			            		c_color = "#FFCC00";
 			            	}
 			            	else if(entry.getValue().getStatus().equals("E")){
 			            		status = "조퇴";
+			            		c_color = "#663399";
 			            	}
 			            	else{
 			            		status = "결석";
+			            		c_color = "#ff0000";
 			            	}%>
 				            {
 				                start : '<%=entry.getValue().getWorkIn()%>',
 				                end : '<%=entry.getValue().getWorkOut()%>',
-				                status:'<%=status%>',
-				                color : '#' + Math.round(Math.random() * 0xffffff).toString(16)
+				                title:'<%=status%>',
+				                color : '<%=c_color%>'
 				             },
+				             
 						<%}
 					}%>
 				],
-                // ...
-                // 날짜 클릭 이벤트
-                dateClick: function(info) {
+
+                eventClick: function(info) {
                 	
-                    //$('#dateClickDetails').html('Clicked on: ' + info.dateStr);
-                    $.ajax({
-                    	type : "GET",           // 타입 (get, post, put 등등)
-        			    url : "/calendar/details",      // 요청할 서버url
-        			    data : {
-        			    	'today':info.dateStr     //해당 날짜
-        			    },     // 데이터 타입 (html, xml, json, text 등등)
-        			    success : function(result) { // 결과 성공 콜백함수
-        			        console.log(result);
-        			        alert(result);
-        			        var txt="";
-        			        $.each(result, function(idx, e){
-        			        	txt = "WorkIn: "+e.getWorkIn()+"<br>"
-        			        	+"WorkOut: "+e.workOut+"<br>"
-        			        	+"Status: "+e.status;
-        			        })
-        			        
-        			    	$("#dateClickDetails").html(txt);
-        			    	$('#dateClickModal').modal('show');	
-        			    },
-        			    error : function(request, status, error) { // 결과 에러 콜백함수
-        			        console.log(error)
-        			    }
-                    });
+                	var txt = "WorkIn: "+info.event.start.toTimeString().split(' ')[0]+"<br>"
+		        	+"WorkOut: "+info.event.end.toTimeString().split(' ')[0]+"<br>"
+		        	+"Status: "+info.event.title;
+                	
+                	$("#title").html(info.event.start.toLocaleDateString().replace(/\./g, '').replace(/\s/g, '-'));
+                	$("#dateClickDetails").html(txt);
+			    	$('#dateClickModal').modal('show');
                     
                 }
             });

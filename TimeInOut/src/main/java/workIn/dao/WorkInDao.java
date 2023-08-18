@@ -35,7 +35,7 @@ public class WorkInDao {
 	static final UserDao userDao = new UserDao();
 	static User user;
 	static final WorkIn work = new WorkIn();
-	static WorkInDto workInDto;
+	
 	
 	public WorkIn getUserWork(String userName) {
 		user = userDao.getUser(userName);
@@ -77,11 +77,7 @@ public class WorkInDao {
 		user = userDao.getUser(userId);
 		long id = user.getId();
 		HashMap<String,WorkInDto> works = new HashMap<>();
-		
-		LocalDateTime dateToday = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String today = dateToday.format(formatter);
-		
+
 		String query = "SELECT * "
 				+ "FROM WORKIN "
 				+ "WHERE userId = ?";
@@ -97,8 +93,8 @@ public class WorkInDao {
 					String workIn = rs.getString("workIn");
 					String workOut = rs.getString("workOut");
 					String status = getWorkStatus(workIn,workOut);
-					workInDto = new WorkInDto(u_name,workIn,workOut,status);
-					works.put(today, workInDto);
+					WorkInDto workInDto = new WorkInDto(u_name,workIn,workOut,status);
+					works.put(rs.getString("today"), workInDto);
 				}
 			}catch(SQLException e) {
 				e.printStackTrace();
