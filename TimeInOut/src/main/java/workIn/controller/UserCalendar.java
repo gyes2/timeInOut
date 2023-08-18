@@ -44,35 +44,14 @@ public class UserCalendar extends HttpServlet {
 			String username = (String) session.getAttribute("userId");
 			
 			works = workInDao.getWorkList(username);
-			System.out.println("calendar 컨트롤러 맵 들어왔는지 확인");
-			int i =0;
-			for(Map.Entry<String, WorkInDto> entry: works.entrySet()) {
-				System.out.println(i);
-				System.out.println(entry.getValue().getWorkIn());
-				System.out.println(entry.getValue().getWorkOut());
-				System.out.println(entry.getValue().getStatus());
-				i++;
-			}
+
+			
+			
 			request.setAttribute("workList", works);
 			dispatcher = getServletContext().getRequestDispatcher("/userCalendar.jsp");
 			dispatcher.forward(request,response);
 		}
-		else if(path.equals("/calendar/details")) {
-			String today = request.getParameter("today");
-			System.out.println(today);
-			HttpSession session = request.getSession();
-			String username = (String) session.getAttribute("userId");
-			
-			works = workInDao.getWorkList(username);
-			WorkInDto workDetail = works.get(today);
-			System.out.println(workDetail);
-			response.setContentType("text/plain;charset=UTF-8");
-			
-			//request.setAttribute("workDetail", workDetail);
-			//dispatcher = getServletContext().getRequestDispatcher("/userCalendar.jsp");
-		}
 
-		
 	}
 
 }
