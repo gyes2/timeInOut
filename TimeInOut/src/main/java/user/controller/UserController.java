@@ -33,8 +33,8 @@ public class UserController extends HttpServlet {
 
         RequestDispatcher dispatcher;
 
-        if(path.equals("/user/signup")) {
-            dispatcher = getServletContext().getRequestDispatcher("/signup.jsp");
+        if(path.equals("/user/login")) {
+        	dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
         }
         else if(path.equals("/user/mypage")) {
             HttpSession session = req.getSession();
@@ -45,9 +45,7 @@ public class UserController extends HttpServlet {
             
             dispatcher = getServletContext().getRequestDispatcher("/mypage.jsp");
         }
-        else if(path.equals("/user/login")) {
-        	dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-        }
+        
         else {
             // 404 페이지
             dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
