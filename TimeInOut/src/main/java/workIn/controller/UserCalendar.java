@@ -44,6 +44,7 @@ public class UserCalendar extends HttpServlet {
 			String username = (String) session.getAttribute("userId");
 			
 			works = workInDao.getWorkList(username);
+
 			
 			
 			request.setAttribute("workList", works);
