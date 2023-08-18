@@ -21,11 +21,13 @@
 	<%
 	//세션확인
 	if(session.getAttribute("userId") != null){
+		System.out.println(session.getAttribute("userId"));
 		if(request.getAttribute("userId") == (String)session.getAttribute("userId")){
 	%>
-	<script>
-		alert("이미 로그인이 완료된 상태입니다.");
-	</script>
+			<script>
+				alert("이미 로그인이 완료된 상태입니다.");
+				response.sendRedirect("main.jsp");
+			</script>
 	<% 		
 		}
 	}

@@ -25,7 +25,7 @@
 </head>
 <body>
     <form name="login" action="/login" 
-    method="post" onsubmit="logincheck()" >
+    method="post" onsubmit="return logincheck()" >
         <table>
             <tr>
                 <td>ID : </td>
