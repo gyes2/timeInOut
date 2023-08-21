@@ -34,8 +34,8 @@
 <body>
 <p>User ID: ${mypage.userId}</p>
 <p>Company Name: ${mypage.companyName}</p>
-<p>Office Start Time: ${mypage.companyIn}</p>
-<p>Office End Time: ${mypage.companyOut}</p>
+<p>Office Start Time: ${mypage.companyInHour}:${mypage.companyInMinute}</p>
+<p>Office End Time: ${mypage.companyOutHour}:${mypage.companyOutMinute}</p>
 
 <button type="button" onclick="showModal()">Change Password</button>
 <div id="changePasswordModal" class="modal">

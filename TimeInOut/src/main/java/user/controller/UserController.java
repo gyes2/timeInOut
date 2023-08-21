@@ -47,7 +47,7 @@ public class UserController extends HttpServlet {
         }
         
         else {
-            // 404 페이지
+            // 404 �럹�씠吏�
             dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
         }
 
@@ -66,8 +66,11 @@ public class UserController extends HttpServlet {
         myPageDto.setUserId(user.getUserId());
         myPageDto.setUserPassword(password);
         myPageDto.setCompanyName(company.getCompanyName());
-        myPageDto.setCompanyIn(company.getCompanyIn());
-        myPageDto.setCompanyOut(company.getCompanyOut());
+        myPageDto.setCompanyInHour(company.getCompanyInHour());
+        myPageDto.setCompanyInMinute(company.getCompanyInMinute());
+        myPageDto.setCompanyOutHour(company.getCompanyOutHour());
+        myPageDto.setCompanyOutMinute(company.getCompanyOutMinute());
+        
 
         return myPageDto;
     }

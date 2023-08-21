@@ -32,8 +32,10 @@ public class CompanyDao {
             while(rs.next()) {
             	newCompany = new Company();
             	newCompany.setCompanyName(rs.getString("companyName"));
-            	newCompany.setCompanyIn(rs.getString("companyIn"));
-            	newCompany.setCompanyOut(rs.getString("companyOut"));
+            	newCompany.setCompanyInHour(rs.getString("companyInHour"));
+            	newCompany.setCompanyInMinute(rs.getString("companyInMinute"));
+            	newCompany.setCompanyOutHour(rs.getString("companyOutHour"));
+            	newCompany.setCompanyOutMinute(rs.getString("companyOutMinute"));
             }
 
         } catch(SQLException e) {
@@ -43,5 +45,26 @@ public class CompanyDao {
         }
 		
 		return newCompany;
+	}
+	public Company getCompanyByCompanyName(String companyName) {
+		Company adminCompany = null;
+		String query = "select * from company where companyName = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,companyName);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				adminCompany = new Company();
+				adminCompany.setCompanyInHour(rs.getString("companyInHour"));
+				adminCompany.setCompanyInMinute(rs.getString("companyInMinute"));
+				adminCompany.setCompanyOutHour(rs.getString("companyOutHour"));
+				adminCompany.setCompanyOutMinute(rs.getString("companyOutMinute"));
+				adminCompany.setCompanyName(rs.getString("companyName"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return adminCompany;
 	}
 }

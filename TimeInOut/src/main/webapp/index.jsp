@@ -14,6 +14,9 @@
     <br>
     <a href = "/user/mypage">MY PAGE</a>
     <br>
-    
+    <a href = "/company/register">REGISTER</a>
+    <br>
+    <a href = "/admin/user">USER LIST</a>
+    <br>
 </body>
 </html>
