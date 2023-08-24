@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style/shared.css">
   
-  <title>Login-user</title>
+ <title>Login-company</title>
   <style>
   
     #wrap {
@@ -48,8 +48,8 @@
       width: 100%;
       height: 100%;
       position: absolute;
-      padding: 90px 70px 50px 70px;
-      background-color: #272d57;
+      padding: 50px 70px 50px 70px;
+      background-color: #545457;
       border: 1px solid black;
     }
 
@@ -78,7 +78,6 @@
       margin: 0 15px 10px 0;
       display: inline-block;
       border-bottom: 2px solid transparent;
-      cursor: pointer;
     }
 
     .login-html .sign-in:checked+.tab,
@@ -102,7 +101,7 @@
     .login-form .group .input,
     .login-form .group .button {
       width: 100%;
-      color: #fff;
+      color: #000000;
       display: block;
     }
 
@@ -111,7 +110,7 @@
       border: none;
       padding: 15px 20px;
       border-radius: 25px;
-      background: rgba(255, 255, 255, .1);
+      background: white;
     }
 
 
@@ -122,11 +121,9 @@
 
     .login-form .group .button {
       background: #1161ee;
-      cursor: pointer;
     }
 
     
-
     .login-form .group .check:checked+label {
       color: #fff;
     }
@@ -141,17 +138,17 @@
 
     .hr {
       height: 2px;
-      margin: 20px 0 50px 0;
+      margin: 20px 0 20px 0;
       background: rgba(255, 255, 255, .2);
     }
-
+    
     #Duplicate_Check {
       position: absolute;
       left: 19rem;
       top: 1.7rem;
       background-color: transparent;
       border-style: none;
-      color: #fff;
+      color: #000;
       cursor: pointer;
     }
 
@@ -187,84 +184,103 @@
   </style>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
-   <div id="wrap">
-	<!-- 해더 -->
-	<header id="header">
-  	  <h1 class="logo">
-        <a href="/index.jsp">TIME IN OUT.</a>
-  	  </h1>
-   	  <nav>
+  <div id="wrap">
+    <!-- 해더 -->
+    <header id="header">
+      <h1 class="logo">
+        <a href="/index.html">TIME IN OUT.</a>
+      </h1>
+      <!-- 삭제할것 -->
+      <nav>
         <ul>
-          <a href="./login_company.jsp">기업 로그인</a>
+          <a href="./login.jsp">개인 로그인</a>
         </ul>
       </nav>
-	</header>
-
-<!-- 메인 -->
-	<main id="main">
-     <div class="login-wrap">
+    </header>
+    <!-- 메인 -->
+    <main id="main">
+      <div class="login-wrap">
         <div class="login-html">
-            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-            <div class="login-form">
-                <%-- sign in --%>
-                <form name="signin" action="/login" method="post" onsubmit="return logincheck()">
-                    <div class="sign-in-htm">
-                        <br>
-                        <div class="group">
-                            <label for="user" class="label">Username</label>
-                            <input id="user" type="text" class="input" name="userId">
-                        </div>
-                        <br>
-                        <div class="group">
-                            <label for="pass" class="label">Password</label>
-                            <input id="pass" type="password" class="input" name="password" data-type="password">
-                        </div>
-                        <div class="hr"></div>
-                        <div class="group">
-                            <input type="submit" class="button" value="Sign In">
-                        </div>
-                    </div>
-                </form>
-
-                <%-- sign up --%>
-                <div class="sign-up-htm">
-                    <form id="signup_form">
-                        <div class="group">
-                            <input type="button" value="중복확인" id="Duplicate_Check">
-                            <label for="signup_user" class="label">Username</label>
-                            <input type="hidden" id="signup_result" value="N">
-                            <input id="signup_user" type="text" class="input" name="signup_user" onkeydown="inputIdChk()">
-                        </div>
-                        <div class="group">
-                            <label for="signup_pass" class="label">Password</label>
-                            <input id="signup_pass" type="password" class="input" name="signup_pass" data-type="password">
-                        </div>
-                        <div class="group">
-                            <label for="signup_repeat" class="label">Repeat Password</label>
-                            <input id="signup_repeat" type="password" class="input" name="signup_repeat" data-type="password">
-                        </div>
-                        <div class="group">
-                            <label for="signup_name" class="label">name</label>
-                            <input id="signup_name" type="text" class="input" name="signup_name">
-                        </div>
-                        <div class="group">
-                            <label for="signup_email" class="label">Email Address</label>
-                            <input id="signup_email" type="text" class="input" name="signup_email">
-                        </div>
-                  	    <div class="hr"></div>
-                        <div class="group">
-                            <input type="submit" class="button" value="Sign Up">
-                        </div>
-                    </form>
-                </div>
+          <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign
+            In</label>
+          <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+          <div class="login-form">
+            <!-- 로그인 -->
+            <div class="sign-in-htm">
+              <br>
+              <div class="group">
+                <label for="user" class="label">Id</label>
+                <input id="user" type="text" class="input">
+              </div>
+              <br>
+              <div class="group">
+                <label for="pass" class="label">Password</label>
+                <input id="pass" type="password" class="input" data-type="password">
+              </div>
+              <div class="hr"></div>
+              <div class="group">
+                <input type="submit" class="button" value="Sign In">
+              </div>
             </div>
+            <!-- 회원가입 -->
+            <div class="sign-up-htm">
+              <div class="group">
+                <input type="button" value="중복확인" id="Duplicate_Check">
+                <label for="user" class="label">Id</label>
+                <input id="user" type="text" class="input">
+              </div>
+              <div class="group">
+                <label for="pass" class="label">Password</label>
+                <input id="pass" type="password" class="input" data-type="password">
+              </div>
+              <div class="group">
+                <label for="pass" class="label">Repeat Password</label>
+                <input id="pass" type="password" class="input" data-type="password">
+              </div>
+              <div class="group">
+                <label for="pass" class="label">Companyname</label>
+                <input id="pass" type="text" class="input">
+              </div>
+              <div class="group">
+                <label for="pass" class="label">Email Address</label>
+                <input id="pass" type="text" class="input">
+              </div>
+                <div class="group">
+                  <label for="pass" class="label">Worktime</label>
+                  <input id="pass" type="text" class="input">
+              </div>
+              <div class="hr"></div>
+              <div class="group">
+                <input type="submit" class="button" value="Sign Up">
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    </main>
+    <!-- 푸터 -->
+    <footer id="footer">
+      <div id="footerp">
+        <p>&copy; 2023 My Website. All rights reserved.</p>
+        <p>Contact us: contact@example.com</p>
+        <p>Follow us on social media:</p>
+      </div>
+      <nav id="footernav">
+        <ul>
+          <li>Facebook</li>
+          <li>Twitter</li>
+          <li>Instagram</li>
+        </ul>
+      </nav>
+    </footer>
+  </div>
+</body>
 
+</html>
     <script>
-        <%-- Sign in : 핸들러 함수 --%>
+        // <%-- Sign in : 핸들러 함수 --%>
         function logincheck(){
 
             if(document.signin.userId.value===""){
@@ -282,7 +298,7 @@
             }
         }
 
-        <%-- Sign up : 중복검사, 회원가입 --%>
+        // <%-- Sign up : 중복검사, 회원가입 --%>
         $(document).ready(function() {
             // 중복검사
             $("#Duplicate_Check").click(function() {
@@ -295,12 +311,12 @@
 
                         // 중복 검사 결과 css에 반영
                         if(response === "unavailable") {
-                            $("#signup_form .group #signup_user").removeClass("available").addClass("unavailable");
+                            $("#signup_user").removeClass("available").addClass("unavailable");
                             document.getElementById("signup_result").value = "N";
                             alert("userId is not available")
                         }
                         else {
-                            $("#signup_form .group #signup_user").removeClass("unavailable").addClass("available");
+                            $("#signup_user").removeClass("unavailable").addClass("available");
                             document.getElementById("signup_result").value = "Y";
                         }
                     }
@@ -369,28 +385,14 @@
         function inputIdChk() {
             var signup_result = $("#signup_result").val();
 
+            console.log("여기");
+
             if(signup_result === "Y") {
-                $("#signup_form .group #signup_user").removeClass("available").addClass("unavailable");
+                $("#signup_user").removeClass("available").addClass("unavailable");
                 document.getElementById("signup_result").value = "N";
             }
         }
     </script>
 </main>
-<!-- 푸터 -->
-    <footer id="footer">
-      <div id="footerp">
-        <p>&copy; 2023 My Website. All rights reserved.</p>
-        <p>Contact us: contact@example.com</p>
-        <p>Follow us on social media:</p>
-      </div>
-      <nav id="footernav">
-        <ul>
-          <li>Facebook</li>
-          <li>Twitter</li>
-          <li>Instagram</li>
-        </ul>
-      </nav>
-    </footer>
-    </div>
 </body>
 </html>
