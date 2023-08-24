@@ -190,7 +190,7 @@
     <!-- 해더 -->
     <header id="header">
       <h1 class="logo">
-        <a href="/index.html">TIME IN OUT.</a>
+        <a href="./index.jsp">TIME IN OUT.</a>
       </h1>
       <!-- 삭제할것 -->
       <nav>
