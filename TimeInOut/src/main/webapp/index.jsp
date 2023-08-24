@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="./style/shared.css">
   
   <title>Time In Out</title>
   <style>
@@ -34,21 +34,21 @@
 
     #index_page1 {
       height: 33.33%;
-      background-image: url("/image/ocean.jpg");
+      background-image: url("./image/ocean.jpg");
       background-position: center;
       background-size: cover;
     }
 
     #index_page2 {
       height: 33.33%;
-      background-image: url("/image/women\ wakeup.png");
+      background-image: url("./image/women\ wakeup.png");
       background-position: center;
       background-size: cover;
     }
 
     #index_page3 {
       height: 33.33%;
-      background-image: url("/image/sand\ clock.png");
+      background-image: url("./image/sand\ clock.png");
       background-position: center;
       background-size: cover;
     }
@@ -146,11 +146,11 @@
     <!-- 헤더 -->
     <header id="header">
       <h1 class="logo">
-        <a href="/index.html">TIME IN OUT.</a>
+        <a href="#">TIME IN OUT.</a>
       </h1>
       <nav>
         <ul>
-          <li><a href="/login_user.html">LOG IN | SIGN UP</a></li>
+          <li><a href="./login.jsp">LOG IN | SIGN UP</a></li>
         </ul>
       </nav>
     </header>
@@ -178,6 +178,7 @@
         <a href="#index_page1"></a>
         <a href="#index_page2"></a>
         <a href="#index_page3"></a>
+      </div>
     </main>
     <!-- 푸터 -->
     <footer></footer>
