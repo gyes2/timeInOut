@@ -49,8 +49,8 @@
       height: 100%;
       position: absolute;
       padding: 50px 70px 50px 70px;
-      background-color: #545457;
-      border: 1px solid black;
+      background: rgb(238,174,202);
+      background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
     }
 
     .login-html .sign-in-htm,
@@ -120,7 +120,7 @@
     }
 
     .login-form .group .button {
-      background: #1161ee;
+      background: #F9EAFF;
     }
 
     

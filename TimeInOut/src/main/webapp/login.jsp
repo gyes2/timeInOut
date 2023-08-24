@@ -49,8 +49,8 @@
       height: 100%;
       position: absolute;
       padding: 90px 70px 50px 70px;
-      background-color: #272d57;
-      border: 1px solid black;
+      background: rgb(2,0,36);
+      background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
     }
 
     .login-html .sign-in-htm,
