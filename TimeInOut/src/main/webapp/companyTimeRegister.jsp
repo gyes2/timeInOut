@@ -36,7 +36,7 @@
 		        		시작 시간
 		        		</td>
 		        		<td>
-		        			<% String in = request.getParameter("company");
+		        			<% Company company = request.get;
 		        				String[] hours = in.split(":");
 		        				String hour = hours[0];
 		        				String minute = hours[1];
