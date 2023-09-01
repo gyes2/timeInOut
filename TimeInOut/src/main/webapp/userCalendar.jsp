@@ -30,10 +30,10 @@
 
 
         #wrap {
-            background-color: #363636;
-
+            background: linear-gradient(45deg, #5f2c82, #49a09d);
             height: 100vh;
         }
+
 
         #main {
             display: flex;
