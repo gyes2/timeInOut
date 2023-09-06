@@ -145,31 +145,33 @@
         <div id="contents">
             <div class="time-set">
                 <h2>시작시간</h2>
-                <select name="startHour">
+                <select id="startHour">
                     <% for(int i=0; i<24; i++) { %>
                     <option value="<%= i %>"><%= i %></option>
                     <% } %>
                 </select>
                 :
-                <select name="startMinute">
-                    <% for(int i=0; i<60; i++) { %>
+                <select id="startMinute">
+                    <% for(int i=0; i<60;) { %>
                     <option value="<%= i %>"><%= i %></option>
-                    <% } %>
+                    <% i = i+5;
+                    } %>
                 </select>
             </div>
 
             <div class="time-set">
                 <h2>종료시간</h2>
-                <select name="endHour">
+                <select id="endHour">
                     <% for(int i=0; i<24; i++) { %>
                     <option value="<%= i %>"><%= i %></option>
                     <% } %>
                 </select>
                 :
-                <select name="endMinute">
-                    <% for(int i=0; i<60; i++) { %>
+                <select id="endMinute">
+                    <% for(int i=0; i<60;) { %>
                     <option value="<%= i %>"><%= i %></option>
-                    <% } %>
+                    <% i = i+5; 
+                    } %>
                 </select>
             </div>
 
@@ -178,7 +180,7 @@
                 <input type="text" name="gpsLocation" placeholder="GPS 위치 정보 입력">
             </div>
 
-            <button type="submit">설정 저장</button>
+            <button type="submit" id="register">설정 저장</button>
         </div>
     </main>
     <footer id="footer">
@@ -196,8 +198,44 @@
         </nav>
     </footer>
 </div>
-
-
+<script type="text/javascript">
+	var startHour = document.getElementById("startHour");
+	var startMinute = document.getElementById("startMinute");
+	var endHour = document.getElementById("endHour");
+	var endMinute = document.getElementById("endMinute");
+	
+	var startH = startHour.options[startHour.selectedIndex].value;
+	var startMin = startMinute.options[startMinute.selectedIndex].value;
+	var endH = endHour.options[endHour.selectedIndex].value;
+	var endMin = endMinute.options[endMinute.selectedIndex].value;
+	
+	$(document).ready(function(){
+		$("#register").click(function(){
+			
+			$.ajax({
+				type:"POST",
+				url:"/company/register/time",
+				data:{
+					startHour:startH,
+					startMin:startMin,
+					endHour:endH,
+					endMin:endMin
+				},
+				success: function(result){
+					if(result>0){
+						alert("출퇴근 시간이 설정되었습니다.");
+					}
+					else{
+						alert("출퇴근 시간이 설정에 실패하였습니다.");
+					}
+					
+				}
+			});
+		});
+	});
+	
+</script>
 </body>
+
 
 </html>

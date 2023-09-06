@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import company.dao.CompanyDao;
 import company.entity.Company;
@@ -37,8 +38,15 @@ public class CompanyServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String path = request.getRequestURI();
+		if(path.equals("/company/register/time")) {
+			HttpSession session = request.getSession();
+			String userId = (String)session.getAttribute("userId");
+			Company company = companyDao.getCompany(userId);
+			int result = companyDao.saveTime(company);
+			response.getWriter().write(result);
+		}
 	}
 
 }

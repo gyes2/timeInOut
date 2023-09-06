@@ -17,7 +17,7 @@ public class CompanyDao {
 	public Company getCompany(String userId) {
 		Company newCompany = null;
 		
-		String query = "SELECT c.id, c.companyName, c.companyIn, c.companyOut "
+		String query = "SELECT c.id, c.companyName, c.companyInHour,c.companyInMinute, c.companyOutHour,c.companyOutMinute "
 				+ "FROM timeinout.`user` u "
 				+ "JOIN timeinout.team t ON u.teamId = t.id "
 				+ "JOIN timeinout.company c ON t.companyId = c.id "
@@ -66,5 +66,41 @@ public class CompanyDao {
 			e.printStackTrace();
 		}
 		return adminCompany;
+	}
+	
+	public int saveTime(Company company) {
+		int rowcount=0;
+		if(Integer.parseInt(company.getCompanyInHour())>Integer.parseInt(company.getCompanyOutHour())){
+			rowcount = -1;
+		}
+		else if(Integer.parseInt(company.getCompanyInHour())==Integer.parseInt(company.getCompanyOutHour())){
+			if(Integer.parseInt(company.getCompanyInMinute())<=Integer.parseInt(company.getCompanyOutMinute())){
+				rowcount = -1;
+			}
+		}
+		else {
+			String query = "update company"
+					+" set companyInHour = ?,"
+					+" companyInMinute=?,"
+					+" companyOutHour=?,"
+					+" companyOutMinute=?"
+					+" where companyName=?";
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1,company.getCompanyInHour());
+				pstmt.setString(2,company.getCompanyInMinute());
+				pstmt.setString(3,company.getCompanyOutHour());
+				pstmt.setString(4,company.getCompanyOutMinute());
+				pstmt.setString(5,company.getCompanyName());
+				rowcount = pstmt.executeUpdate();
+				
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowcount;
 	}
 }
