@@ -2,13 +2,8 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-
-  <title>Time In Out</title>
+    <title>Time In Out</title>
   <style>
 
     *{
@@ -36,11 +31,22 @@
       justify-content: space-between;
     }
 
+    .logo a {
+      color: black;
+    }
+
     #header nav a {
+      background-color: #99CCFF;
+      border-radius: 5px;
+      padding: 0.5rem 1.5rem;
       font-size: 20px;
       font-weight: bold;
       color: black;
       position: relative;
+    }
+
+    #header nav a:hover {
+      background-color: #fff;
     }
 
     #section {
@@ -52,7 +58,8 @@
       align-items: center;
     }
 
-    #section img {
+    #mountains_front,
+    #mountains_behind {
       position: absolute;
       top: 0;
       left: 0;
@@ -61,11 +68,12 @@
       object-fit: cover;
     }
 
+
     :root {
       overflow: hidden;
     }
 
-    .sun {
+       .sun {
       background-color: yellow;
       border-radius: 50%;
       height: 100vh;
@@ -108,7 +116,7 @@
   <!-- 헤더 -->
   <header id="header">
     <h1 class="logo">
-      <a href="/index.jsp">TIME IN OUT</a>
+      <a href="index.jsp">TIME IN OUT</a>
     </h1>
     <nav>
       <ul>
