@@ -7,10 +7,6 @@
 <html>
 <head>
     <meta charset='utf-8'/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/style/shared.css">
 
     <!-- 캘린더 라이브러리 가져다 쓰는 부분 -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.0.1/main.css' rel='stylesheet'/>
@@ -26,6 +22,54 @@
             margin: 0;
             padding: 0;
             text-decoration: none;
+        }
+
+
+        #header {
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            width: 100%;
+            height: 100px;
+            margin: 0 auto;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
+        }
+
+
+        #header .logo a{
+            font-family: 'Dancing Script', cursive;
+            text-decoration: none;
+            font-size: 1.5em;
+            margin-left: 50px;
+            color: black;
+        }
+
+
+        nav a{
+            position: relative;
+            text-decoration: none;
+            font-family: sans-serif;
+            color: black;
+            letter-spacing: 0.5px;
+            margin-left: 50px;
+        }
+
+        nav a::after{
+            content: "";
+            position: absolute;
+            background-color: #075687;
+            height: 3px;
+            width: 0;
+            left: 0;
+            bottom: -10px;
+            transition: 0.3s;
+        }
+        nav a:hover{
+            color: rgb(0, 0, 0);
+        }
+        nav a:hover::after{
+            width: 100%;
         }
 
 
@@ -72,7 +116,7 @@
     <!-- 해더 -->
     <header id="header">
         <h1 class="logo">
-            <a href="index.jsp">TIME IN OUT.</a>
+            <a href="index.jsp">TIME IN OUT</a>
         </h1>
         <nav>
             <ul>

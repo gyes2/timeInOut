@@ -10,12 +10,16 @@
     <title>MY PAGE</title>
     <style>
 
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
         #header {
             justify-content: space-between;
             display: flex;
             align-items: center;
             padding: 15px;
-            height: 100px;
             margin: 0 auto;
         }
 
@@ -84,20 +88,36 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
+
+        #article {
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #article img {
+            height: 35vh;
+            aspect-ratio: auto;
+        }
+
         #main {
             padding: 20px;
             display: flex;
-            height: 80vh;
+            height: 40vh;
             width: 100%;
             justify-content: center;
             align-items: center;
         }
 
+
         #contents {
+            width: 40vh;
+            padding: 10px;
             background-color: #f9f9f9;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border: 1px solid black;
-            padding: 0 100px;
+            text-align: left;
         }
 
         #contents p {
@@ -123,13 +143,20 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
+        /* 푸터 */
         #footer {
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
         }
 
+        #footernav,
+        #footerp {
+            display: flex;
+            margin-left: 100px;
+
+        }
 
 
     </style>
@@ -148,10 +175,13 @@
                 <a href="main.jsp">출퇴근 입력</a>
                 <a href="userCalendar.jsp">출퇴근 조회</a>
                 <a href="mypage.jsp">Mypage</a>
-                <a href="index.jsp">Logout</a>
+                <a href="first.jsp">Logout</a>
             </ul>
         </nav>
     </header>
+    <article id="article">
+            <img src="image/login%20icon.png">
+    </article>
     <main id="main">
         <div id="contents">
             <p>User ID: ${mypage.userId}</p>
@@ -182,7 +212,21 @@
             </form>
         </div>
     </main>
-    <footer id="footer"></footer>
+    <!-- 푸터 -->
+    <footer id="footer">
+        <div id="footerp">
+            <p>&copy; 2023 My Website. All rights reserved.</p>
+            <p>Contact us: contact@example.com</p>
+            <p>Follow us on social media:</p>
+        </div>
+        <nav id="footernav">
+            <ul>
+                <li>Facebook</li>
+                <li>Twitter</li>
+                <li>Instagram</li>
+            </ul>
+        </nav>
+    </footer>
 </div>
 <script>
     const modal = document.getElementById("changePasswordModal");
